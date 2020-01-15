@@ -21,6 +21,7 @@ public class PlanetaService {
     private PlanetaRepository repository;
 
     public List<Planeta> findAll(){
+
         return repository.findAll();
     }
 
@@ -44,21 +45,10 @@ public class PlanetaService {
        Integer filmes;
        if(repository.findyByNome(planeta.getNome()) != null){
            throw new ObjectAlreadyExistsException("Já existe um planeta cadastrado com o nome informado.");
-       } else {
-           if (planeta.getNome() == null){
-               throw new ObjectRequired("A informação de nome é obrigatória");
-           }
-           if (planeta.getClima() == null){
-               throw new ObjectRequired("A informação de clima é obrigatória");
-           }
-           if (planeta.getTerreno() == null){
-               throw new ObjectRequired("A informação de terreno é obrigatória");
-           }
-
-           filmes = getPlanetaAPI(planeta.getNome());
-           planeta.setQuantidadeFilmes(filmes);
-           return repository.insert(planeta);
        }
+       filmes = getPlanetaAPI(planeta.getNome());
+       planeta.setQuantidadeFilmes(filmes);
+       return repository.insert(planeta);
     }
 
     public void deletarPorId(String id){
@@ -84,7 +74,6 @@ public class PlanetaService {
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
 
         ResponseEntity<Planetas> planetas = restTemplate.exchange(URL_PLANETSAPI, HttpMethod.GET, entity, Planetas.class);
-        java.lang.System.setProperty("jdk.tls.client.protocols", "TLSv1,TLSv1.1,TLSv1.2");
 
         List<PlanetaAPI> listaPlanetaAPI = planetas.getBody().getResults();
 

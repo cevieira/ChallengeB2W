@@ -17,38 +17,38 @@ public class PlanetaController {
     @Autowired
     private PlanetaService service;
 
-    @GetMapping(value = "/buscarTodos")
+    @GetMapping(value = "/")
     public ResponseEntity<List<Planeta>> findAll(){
         List<Planeta> lista = service.findAll();
         return ResponseEntity.ok().body(lista);
     }
 
-    @GetMapping(value = "/buscarPorId/{id}")
+    @GetMapping(value = "/{id}")
     public ResponseEntity<Planeta> findById(@PathVariable String id){
         Planeta planeta = service.findById(id);
         return ResponseEntity.ok().body(planeta);
     }
 
-    @GetMapping(value = "/buscarPorNome/{nome}")
+    @GetMapping(value = "/name/{nome}")
     public ResponseEntity<Planeta> findByNome(@PathVariable String nome){
         Planeta planeta = service.findByNome(nome);
         return ResponseEntity.ok().body(planeta);
     }
 
-    @PostMapping(value = "/novo")
+    @PostMapping(value = "/")
     public ResponseEntity<Void> gravar(@RequestBody Planeta planeta){
         planeta = service.gravar(planeta);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id").buildAndExpand(planeta.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
-    @DeleteMapping(value = "/deletarPorId/{id}")
+    @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deletarPorId(@PathVariable String id) {
         service.deletarPorId(id);
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping(value = "/deletarPorNome/{nome}")
+    @DeleteMapping(value = "/name/{nome}")
     public ResponseEntity<Void> deletarPorNome(@PathVariable String nome) {
         service.deletarPorNome(nome);
         return ResponseEntity.noContent().build();

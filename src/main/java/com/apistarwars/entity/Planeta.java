@@ -1,7 +1,10 @@
 package com.apistarwars.entity;
 
+import javafx.beans.DefaultProperty;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Document(collection = "planeta")
@@ -10,8 +13,11 @@ public class Planeta implements Serializable {
 
     @Id
     private String id;
+    @NotNull
     private String nome;
+    @NotNull
     private String clima;
+    @NotNull
     private String terreno;
     private Integer quantidadeFilmes;
 
